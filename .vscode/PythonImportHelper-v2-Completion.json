@@ -1,0 +1,119 @@
+[
+    {
+        "label": "sqlite3",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sqlite3",
+        "description": "sqlite3",
+        "detail": "sqlite3",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "kind": 5,
+        "importPath": "bot",
+        "description": "bot",
+        "peekOfCode": "db = sqlite3.connect('bot.db')\nsql = db.cursor()\npin = int(input('Pin : '))\nsql.execute(\"\"\"    CREATE TABLE IF NOT EXISTS data\n            (\n            id INTEGER PRIMARY KEY AUTOINCREMENT,\n            pin INTEGER,\n            balance INTEGER\n            )\n            \"\"\") ",
+        "detail": "bot",
+        "documentation": {}
+    },
+    {
+        "label": "sql",
+        "kind": 5,
+        "importPath": "bot",
+        "description": "bot",
+        "peekOfCode": "sql = db.cursor()\npin = int(input('Pin : '))\nsql.execute(\"\"\"    CREATE TABLE IF NOT EXISTS data\n            (\n            id INTEGER PRIMARY KEY AUTOINCREMENT,\n            pin INTEGER,\n            balance INTEGER\n            )\n            \"\"\") \nsql.execute(\"SELECT * FROM data '{pin}'\")",
+        "detail": "bot",
+        "documentation": {}
+    },
+    {
+        "label": "pin",
+        "kind": 5,
+        "importPath": "bot",
+        "description": "bot",
+        "peekOfCode": "pin = int(input('Pin : '))\nsql.execute(\"\"\"    CREATE TABLE IF NOT EXISTS data\n            (\n            id INTEGER PRIMARY KEY AUTOINCREMENT,\n            pin INTEGER,\n            balance INTEGER\n            )\n            \"\"\") \nsql.execute(\"SELECT * FROM data '{pin}'\")\nprint(sql.fetchone())",
+        "detail": "bot",
+        "documentation": {}
+    },
+    {
+        "label": "register_user",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def register_user():\n    pin = int(input('Pin : '))\n    cash = int(input('Cash : '))\n    sql.execute(f\"SELECT * FROM users WHERE pin=? \", (pin,))\n    if sql.fetchone():\n        print(\"qeydiyyayin artiq var!\")\n    else:\n        sql.execute(f\"INSERT INTO users (pin,cash) VALUES({pin},{cash})\")\n        db.commit()\n        print(\"qeseng!!\")",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "check_balance",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def check_balance(pin):\n    pin = int(input('Pin : '))\n    sql.execute(f\"SELECT * FROM users WHERE pin=? \", (pin,))\n    print(sql.fetchone())\n    result = sql.fetchone()\n    if result:\n        print(f\"Balance for {pin}: {result[0]}\")\n    else:\n        print(\"bele login yoxdur.\")\ndef spend():",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "spend",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def spend():\n    try:\n        pin = int(input('PIN: '))\n        amount = int(input('amount: '))\n    except ValueError:\n        print(\"Yalnis.\")\n        return\n    with sqlite3.connect('bot.db') as db:\n        sql = db.cursor()\n    sql.execute(\"SELECT cash FROM users WHERE pin=?\", (pin,))",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "withdraw",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def withdraw():\n    try:\n        pin = int(input('PIN: '))\n        amount = int(input('amount: '))\n    except ValueError:\n        print(\"Yalnis.\")\n        return\n    with sqlite3.connect('bot.db') as db:\n        sql = db.cursor()\n    sql.execute(\"SELECT cash FROM users WHERE pin=?\", (pin,))",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "change_pin",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def change_pin():\n    pin = int(input('Pin : '))\n    new_pin = int(input('New Pin : '))\n    sql.execute(f\"UPDATE users SET pin={new_pin} WHERE pin={pin}\")\n    db.commit()\n    print(f\"Pin changed to {new_pin}.\")\ndef delete_user():\n    pin = input(\"Enter username to delete: \")\n    sql.execute(\"DELETE FROM users WHERE pin=?\", (pin,))\n    db.commit()",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "delete_user",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def delete_user():\n    pin = input(\"Enter username to delete: \")\n    sql.execute(\"DELETE FROM users WHERE pin=?\", (pin,))\n    db.commit()\n    print(f\"User '{pin}' deleted.\")\ndef main():\n    # create_database()\n    while True:\n        choice = input(\"Select an option: (1) Qeydiyyatdan kecin (2) Balansi yoxla  (3) Kartdan Pul Cixar  (4) Karta Medaxil et (5) Pini deyish (6) Sil  (7) Cixish: \")\n        if choice == \"1\":",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def main():\n    # create_database()\n    while True:\n        choice = input(\"Select an option: (1) Qeydiyyatdan kecin (2) Balansi yoxla  (3) Kartdan Pul Cixar  (4) Karta Medaxil et (5) Pini deyish (6) Sil  (7) Cixish: \")\n        if choice == \"1\":\n            register_user()\n        elif choice == \"2\":\n            check_balance()\n        elif choice == \"3\":\n            spend()",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "db = sqlite3.connect('bot.db')\nsql = db.cursor()\n# def create_database():\n#     sql.execute(\"\"\"CREATE TABLE IF NOT EXISTS users(\n#                 id INTEGER PRIMARY KEY AUTOINCREMENT, \n#                 pin INTEGER NOT NULL CHECK (pin >= 0),\n#                 cash INTEGER NOT NULL CHECK (cash >= 0)\n#                 )\"\"\")\n# db.commit()\n# db.close()",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "sql",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "sql = db.cursor()\n# def create_database():\n#     sql.execute(\"\"\"CREATE TABLE IF NOT EXISTS users(\n#                 id INTEGER PRIMARY KEY AUTOINCREMENT, \n#                 pin INTEGER NOT NULL CHECK (pin >= 0),\n#                 cash INTEGER NOT NULL CHECK (cash >= 0)\n#                 )\"\"\")\n# db.commit()\n# db.close()\ndef register_user():",
+        "detail": "main",
+        "documentation": {}
+    }
+]
